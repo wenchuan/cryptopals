@@ -7,10 +7,10 @@ dec_to_chr = '0123456789abcdef'
 chr_to_dec = dict([(dec_to_chr[i], i) for i in xrange(len(dec_to_chr))])
 
 def base64_encode(s):
-    b = hexstring_to_bytes(s)
+    b = hex_decode(s)
     return ''.join([encode_block(b[i:i+3]) for i in range(len(b))[::3]])
 
-def hexstring_to_bytes(s):
+def hex_decode(s):
     return [chr_to_dec[a] * 16 + chr_to_dec[b] for a,b in zip(s[::2],s[1::2])]
 
 def encode_block(s):

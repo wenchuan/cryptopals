@@ -11,17 +11,17 @@ def teardown():
     print "TEAR DOWN!"
 
 def test_hexstring_to_bytes_empty():
-    assert [] == base64.hexstring_to_bytes('')
+    assert [] == base64.hex_decode('')
 
 def test_hexstring_to_bytes_simple():
-    assert [0] == base64.hexstring_to_bytes('00')
-    assert [1] == base64.hexstring_to_bytes('01')
-    assert [255] == base64.hexstring_to_bytes('ff')
+    assert [0] == base64.hex_decode('00')
+    assert [1] == base64.hex_decode('01')
+    assert [255] == base64.hex_decode('ff')
 
 def test_hexstring_to_bytes_full_range():
     source = range(256)
     hexstring = ''.join([format(x, '02x') for x in source])
-    transformed = base64.hexstring_to_bytes(hexstring)
+    transformed = base64.hex_decode(hexstring)
     print source
     print hexstring
     print transformed
@@ -31,7 +31,7 @@ def test_hexstring_to_bytes_full_range_shuffled():
     source = range(256)
     shuffle(source)
     hexstring = ''.join([format(x, '02x') for x in source])
-    transformed = base64.hexstring_to_bytes(hexstring)
+    transformed = base64.hex_decode(hexstring)
     print source
     print hexstring
     print transformed
