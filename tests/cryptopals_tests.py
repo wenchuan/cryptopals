@@ -2,7 +2,7 @@
 
 from nose.tools import *
 from cryptopals import base64, xor
-from random import shuffle
+from random import shuffle, randint, choice
 
 def setup():
     print "SETUP!"
@@ -10,15 +10,15 @@ def setup():
 def teardown():
     print "TEAR DOWN!"
 
-def test_hexstring_to_bytes_empty():
+def test_hex_decode_empty():
     assert [] == base64.hex_decode('')
 
-def test_hexstring_to_bytes_simple():
+def test_hex_decode_simple():
     assert [0] == base64.hex_decode('00')
     assert [1] == base64.hex_decode('01')
     assert [255] == base64.hex_decode('ff')
 
-def test_hexstring_to_bytes_full_range():
+def test_hex_decode_full_range():
     source = range(256)
     hexstring = ''.join([format(x, '02x') for x in source])
     transformed = base64.hex_decode(hexstring)
@@ -27,7 +27,7 @@ def test_hexstring_to_bytes_full_range():
     print transformed
     assert source == transformed
 
-def test_hexstring_to_bytes_full_range_shuffled():
+def test_hex_decode_full_range_shuffled():
     source = range(256)
     shuffle(source)
     hexstring = ''.join([format(x, '02x') for x in source])
@@ -36,6 +36,20 @@ def test_hexstring_to_bytes_full_range_shuffled():
     print hexstring
     print transformed
     assert source == transformed
+
+def test_hex_encode_simple():
+    assert '00' == base64.hex_encode([0])
+    assert '01' == base64.hex_encode([1])
+    assert '11' == base64.hex_encode([17])
+    assert 'ff' == base64.hex_encode([255])
+
+def test_hex_encode_decode():
+    source = [randint(0,255) for i in xrange(1024)]
+    assert source == base64.hex_decode(base64.hex_encode(source))
+
+def test_hex_decode_encode():
+    source = ''.join([choice('0123456789abcdef') for i in xrange(1024)])
+    assert source == base64.hex_encode(base64.hex_decode(source))
 
 def test_encode_block():
     assert 'AAAA' == base64.encode_block([0,0,0])
