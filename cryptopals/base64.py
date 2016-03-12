@@ -9,8 +9,7 @@ hex_to_dec = dict([(dec_to_hex[i], i) for i in xrange(len(dec_to_hex))])
 
 def base64_encode(s):
     """return the base64 encoding of a byte string"""
-    b = hex_decode(s)
-    return ''.join([encode_block(b[i:i+3]) for i in range(len(b))[::3]])
+    return ''.join([encode_block(s[i:i+3]) for i in range(len(s))[::3]])
 
 def base64_decode(s):
     """decode base64 encoded string to a byte string"""
