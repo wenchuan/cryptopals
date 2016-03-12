@@ -59,6 +59,18 @@ def test_encode_block():
     assert 'cw==' == base64.encode_block([115])
     assert 'c3U=' == base64.encode_block([115, 117])
 
+def test_decode_block():
+    assert [0,0,0] == base64.decode_block('AAAA')
+    assert [255,255,255] == base64.decode_block('////')
+    assert [5,231,159] == base64.decode_block('Beef')
+    assert [97,110,121] == base64.decode_block('YW55')
+    assert [115] == base64.decode_block('cw==')
+    assert [115,117] == base64.decode_block('c3U=')
+
+def test_base64_decode():
+    assert base64.base64_decode('SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t') == base64.hex_decode('49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d')
+
+
 def test_base64_encode():
     assert 'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t' == base64.base64_encode('49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d')
 
