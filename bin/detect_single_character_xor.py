@@ -3,14 +3,14 @@
 # http://cryptopals.com/sets/1/challenges/4/
 
 import requests
-from cryptopals import base64, xor
+from cryptopals import base64, bits
 
 r = requests.get('http://cryptopals.com/static/challenge-data/4.txt')
 
 ciphertexts = map(base64.hex_decode, r.text.split())
 
 def decrypt(key, ciphertext):
-    return xor.xor(ciphertext, [key] * len(ciphertext))
+    return bits.xor(ciphertext, [key] * len(ciphertext))
 
 def score_byte(b):
     c = chr(b)

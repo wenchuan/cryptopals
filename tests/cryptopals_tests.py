@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from nose.tools import *
-from cryptopals import base64, xor
+from cryptopals import base64, bits
 from random import shuffle, randint, choice
 
 def setup():
@@ -75,11 +75,18 @@ def test_base64_encode():
     assert 'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t' == base64.base64_encode(base64.hex_decode('49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d'))
 
 def test_fixed_xor():
-    assert base64.hex_decode('746865206b696420646f6e277420706c6179') == xor.xor(base64.hex_decode('1c0111001f010100061a024b53535009181c'), base64.hex_decode('686974207468652062756c6c277320657965'))
+    assert base64.hex_decode('746865206b696420646f6e277420706c6179') == bits.xor(base64.hex_decode('1c0111001f010100061a024b53535009181c'), base64.hex_decode('686974207468652062756c6c277320657965'))
 
 def test_repeating_key_xor():
     cleartext = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"
 
-    a = xor.xor_encrypt(map(ord, cleartext), map(ord, "ICE"))
+    a = bits.xor_encrypt(map(ord, cleartext), map(ord, "ICE"))
     b = base64.hex_decode('0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f')
     assert a == b
+
+def test_count_set_bits():
+    assert 8 == bits.count_set_bits(0xff)
+    assert 0 == bits.count_set_bits(0)
+
+def test_hamming_distance():
+    assert 37 == bits.hamming_distance(map(ord,'this is a test'), map(ord,'wokka wokka!!!'))

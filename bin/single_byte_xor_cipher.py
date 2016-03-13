@@ -2,12 +2,12 @@
 #
 # http://cryptopals.com/sets/1/challenges/3/
 
-from cryptopals import base64, xor
+from cryptopals import base64, bits
 
 ciphertext = base64.hex_decode('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
 
 def decrypt(key):
-    return xor.xor(ciphertext, [key] * len(ciphertext))
+    return bits.xor(ciphertext, [key] * len(ciphertext))
 
 def score_byte(b):
     c = chr(b)
