@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 def xor(a,b):
+    assert len(a) == len(b)
     return [x^y for x,y in zip(a,b)]
 
 def xor_encrypt(cleartext, key):
